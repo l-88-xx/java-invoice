@@ -49,4 +49,21 @@ public class Invoice {
         }
         return value;
     }
+
+    /*
+    public int getNumber() {
+        return new Random().nextInt(1000000000);
+    }
+    */
+
+    static int NUMBER = 0;
+    private int number;
+
+    public Invoice() {
+        this.number = NUMBER += 1;
+    }
+
+    public int getNumber() {
+        return number;
+    }
 }

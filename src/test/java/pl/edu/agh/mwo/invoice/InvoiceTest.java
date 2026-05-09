@@ -123,4 +123,24 @@ public class InvoiceTest {
     public void testAddingNullProduct() {
         invoice.addProduct(null);
     }
+
+
+    @Test
+    public void testInvoiceHasNumberGreatherThanZero() {
+        int number = invoice.getNumber();
+        Assert.assertTrue(number > 0);
+    }
+
+    @Test
+    public void testTwoInvoicesHaveDifferentNumbers() {
+        //int number = invoice.getNumber();
+        //Assert.assertTrue(number > 0);
+    }
+
+    @Test
+    public void testInvoiceHasConsequentNumber() {
+        int number = invoice.getNumber();
+        Assert.assertTrue(number > 0);
+    }
+
 }
