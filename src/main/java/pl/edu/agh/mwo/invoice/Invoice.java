@@ -56,14 +56,14 @@ public class Invoice {
     }
     */
 
-    static int NUMBER = 0;
-    private int number;
+    private static int NUMBER = 0;
+    private final int number;
 
     public Invoice() {
-        this.number = NUMBER += 1;
+        this.number = ++NUMBER;
     }
 
     public int getNumber() {
-        return number;
+        return this.number;
     }
 }
