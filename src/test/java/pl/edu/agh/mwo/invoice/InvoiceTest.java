@@ -126,7 +126,7 @@ public class InvoiceTest {
 
 
     @Test
-    public void testInvoiceHasNumberGreatherThanZero() {
+    public void testInvoiceHasNumberGreaterThanZero() {
         int number = invoice.getNumber();
         Assert.assertTrue(number > 0);
     }
@@ -154,5 +154,23 @@ public class InvoiceTest {
 
         Assert.assertTrue(firstNumber + 1 == secondNumber);
     }
+
+    @Test
+    public void testInvoicePrinting() {
+
+        invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 2);
+        invoice.addProduct(new DairyProduct("Mleko", new BigDecimal("3")), 1);
+
+        String printedInvoice = invoice.print();
+
+        String expected =
+                "Faktura nr " + invoice.getNumber() + "\n"
+                        + "Chleb 2 5\n"
+                        + "Mleko 1 3\n"
+                        + "Liczba pozycji: 2";
+
+        Assert.assertEquals(expected, printedInvoice);
+    }
+
 
 }
