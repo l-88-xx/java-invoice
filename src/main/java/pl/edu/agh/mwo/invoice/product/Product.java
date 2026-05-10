@@ -22,6 +22,10 @@ public abstract class Product {
         this.taxPercent = tax;
     }
 
+    public BigDecimal getExcise() {
+        return BigDecimal.ZERO;
+    }
+
     public String getName() {
         return this.name;
     }

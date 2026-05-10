@@ -28,7 +28,6 @@ public class Invoice {
         }
     }
 
-
     public BigDecimal getNetValue() {
         BigDecimal value = BigDecimal.ZERO;
 
@@ -42,7 +41,18 @@ public class Invoice {
     }
 
     public BigDecimal getTax() {
-        return getGrossValue().subtract(getNetValue());
+
+        BigDecimal value = BigDecimal.ZERO;
+
+        for (Product product : this.products.keySet()) {
+            Integer quantity = this.products.get(product);
+            BigDecimal tax = product.getPrice()
+                    .multiply(product.getTaxPercent())
+                    .multiply(BigDecimal.valueOf(quantity));
+
+            value = value.add(tax);
+        }
+        return value;
     }
 
     public BigDecimal getGrossValue() {
@@ -57,12 +67,6 @@ public class Invoice {
         }
         return value;
     }
-
-    /*
-    public int getNumber() {
-        return new Random().nextInt(1000000000);
-    }
-    */
 
     private static int NUMBER = 0;
     private final int number;
@@ -88,11 +92,8 @@ public class Invoice {
                     + product.getPrice()
                     + "\n";
         }
-
         result += "Liczba pozycji: " + this.products.size();
 
         return result;
     }
-
-
 }

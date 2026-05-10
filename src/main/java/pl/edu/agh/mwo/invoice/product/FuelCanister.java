@@ -2,12 +2,13 @@ package pl.edu.agh.mwo.invoice.product;
 
 import java.math.BigDecimal;
 
-public class BottleOfWine extends Product {
+public class FuelCanister extends Product {
 
     private static final BigDecimal EXCISE = new BigDecimal("5.56");
 
-    public BottleOfWine(String name, BigDecimal price) {
-        super(name, price, new BigDecimal("0.23"));
+    public FuelCanister(String name, BigDecimal price) {
+        //bez vatu
+        super(name, price, BigDecimal.ZERO);
     }
 
     @Override

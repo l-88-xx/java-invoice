@@ -4,10 +4,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.agh.mwo.invoice.product.DairyProduct;
-import pl.edu.agh.mwo.invoice.product.OtherProduct;
-import pl.edu.agh.mwo.invoice.product.Product;
-import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.*;
 
 import java.math.BigDecimal;
 
@@ -88,7 +85,7 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testInvoiceHasPropoerSubtotalWithQuantityMoreThanOne() {
+    public void testInvoiceHasProperSubtotalWithQuantityMoreThanOne() {
         // 2x kubek - price: 10
         invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 2);
         // 3x kozi serek - price: 30
@@ -99,7 +96,7 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testInvoiceHasPropoerTotalWithQuantityMoreThanOne() {
+    public void testInvoiceHasProperTotalWithQuantityMoreThanOne() {
         // 2x chleb - price with tax: 10
         invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 2);
         // 3x chedar - price with tax: 32.40
@@ -133,8 +130,6 @@ public class InvoiceTest {
 
     @Test
     public void testTwoInvoicesHaveDifferentNumbers() {
-        //int number = invoice.getNumber();
-        //Assert.assertTrue(number > 0);
         Invoice firstInvoice = new Invoice();
         Invoice secondInvoice = new Invoice();
 
@@ -203,7 +198,6 @@ public class InvoiceTest {
         invoice.addProduct(milk, 3);
 
         String printedInvoice = invoice.print();
-
         String expected = "Faktura nr " + invoice.getNumber() + "\n" + "Mleko 5 5\n" + "Liczba pozycji: 1";
 
         Assert.assertEquals(expected, printedInvoice);
@@ -259,7 +253,4 @@ public class InvoiceTest {
                 Matchers.comparesEqualTo(invoice.getTax())
         );
     }
-
-
-
 }
