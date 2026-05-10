@@ -135,12 +135,24 @@ public class InvoiceTest {
     public void testTwoInvoicesHaveDifferentNumbers() {
         //int number = invoice.getNumber();
         //Assert.assertTrue(number > 0);
+        Invoice firstInvoice = new Invoice();
+        Invoice secondInvoice = new Invoice();
+
+        Assert.assertNotEquals(
+                firstInvoice.getNumber(),
+                secondInvoice.getNumber()
+        );
     }
 
     @Test
     public void testInvoiceHasConsequentNumber() {
-        int number = invoice.getNumber();
-        Assert.assertTrue(number > 0);
+
+        int firstNumber = invoice.getNumber();
+
+        Invoice secondInvoice = new Invoice();
+        int secondNumber = secondInvoice.getNumber();
+
+        Assert.assertTrue(firstNumber + 1 == secondNumber);
     }
 
 }
