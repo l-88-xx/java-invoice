@@ -172,5 +172,14 @@ public class InvoiceTest {
         Assert.assertEquals(expected, printedInvoice);
     }
 
+    @Test
+    public void testPrintingEmptyInvoice() {
+        String printedInvoice = invoice.print();
+
+        String expected = "Faktura nr " + invoice.getNumber() + "\n" + "Liczba pozycji: 0";
+
+        Assert.assertEquals(expected, printedInvoice);
+    }
+
 
 }
