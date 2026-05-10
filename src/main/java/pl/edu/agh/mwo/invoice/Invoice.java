@@ -18,8 +18,16 @@ public class Invoice {
         if (product == null || quantity == null || quantity <= 0) {
             throw new IllegalArgumentException("Invalid product or quantity");
         }
-        this.products.put(product, quantity);
+
+        if (this.products.containsKey(product)) {
+            Integer currentQuantity = this.products.get(product);
+
+            this.products.put(product, currentQuantity + quantity);
+        } else {
+            this.products.put(product, quantity);
+        }
     }
+
 
     public BigDecimal getNetValue() {
         BigDecimal value = BigDecimal.ZERO;

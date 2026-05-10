@@ -181,5 +181,60 @@ public class InvoiceTest {
         Assert.assertEquals(expected, printedInvoice);
     }
 
+    @Test
+    public void testAddingSameProductTwiceIncreasesQuantity() {
+        Product chleb = new TaxFreeProduct("Chleb", new BigDecimal("5"));
+
+        invoice.addProduct(chleb, 2);
+        invoice.addProduct(chleb, 3);
+
+        //2*5, 3*5
+        Assert.assertThat(new BigDecimal("25"), Matchers.comparesEqualTo(invoice.getNetValue()));
+    }
+
+    @Test
+    public void testPrintingInvoiceWithTheSameProductAddedTwice() {
+        Product milk = new DairyProduct(
+                "Mleko",
+                new BigDecimal("5")
+        );
+
+        invoice.addProduct(milk, 2);
+        invoice.addProduct(milk, 3);
+
+        String printedInvoice = invoice.print();
+
+        String expected = "Faktura nr " + invoice.getNumber() + "\n" + "Mleko 5 5\n" + "Liczba pozycji: 1";
+
+        Assert.assertEquals(expected, printedInvoice);
+    }
+
+    @Test
+    public void testAddingSameProductTwiceDoesNotCreateNewInvoicePosition() {
+        Product maslo = new DairyProduct("Maslo", new BigDecimal("10"));
+
+        invoice.addProduct(maslo, 1);
+        invoice.addProduct(maslo, 1);
+
+        String printed = invoice.print();
+
+        // oczekuje tylko jeden wpis
+        // bez nagłwóka i 'Liczba pozycji'
+        int count = printed.split("\n").length - 2;
+        Assert.assertEquals(1, count);
+    }
+
+    @Test
+    public void testInvoiceWithMixedProductsAndDuplicate() {
+        Product mleko = new DairyProduct("Mleko", new BigDecimal("3"));
+        Product chleb = new TaxFreeProduct("Chleb", new BigDecimal("5"));
+
+        invoice.addProduct(mleko, 1);
+        invoice.addProduct(chleb, 2);
+        invoice.addProduct(chleb, 3);
+
+        Assert.assertThat(new BigDecimal("28"), Matchers.comparesEqualTo(invoice.getNetValue()));
+    }
+
 
 }
