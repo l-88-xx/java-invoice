@@ -236,5 +236,30 @@ public class InvoiceTest {
         Assert.assertThat(new BigDecimal("28"), Matchers.comparesEqualTo(invoice.getNetValue()));
     }
 
+    @Test
+    public void testInvoiceWithExciseProducts() {
+        invoice.addProduct(new BottleOfWine("Merlot", new BigDecimal("20.00"))); // 30.16
+        invoice.addProduct(new FuelCanister("Benzyna", new BigDecimal("7.00"))); // 12.56
+
+        Assert.assertThat(
+                new BigDecimal("42.72"),
+                Matchers.comparesEqualTo(invoice.getGrossValue())
+        );
+    }
+
+    @Test
+    public void testInvoiceTaxWithExciseProducts() {
+        invoice.addProduct(new BottleOfWine("Merlot", new BigDecimal("20.00"))); // VAT: 4.60
+        invoice.addProduct(new FuelCanister("Benzyna", new BigDecimal("7.00"))); // VAT: 0
+
+        // suma VAT 4.60
+        // Akcyza nie wchodzi do getTax()
+        Assert.assertThat(
+                new BigDecimal("4.60"),
+                Matchers.comparesEqualTo(invoice.getTax())
+        );
+    }
+
+
 
 }
