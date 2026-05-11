@@ -14,9 +14,4 @@ public class BottleOfWine extends Product {
     public BigDecimal getPriceWithTax() {
         return super.getPriceWithTax().add(EXCISE);
     }
-
-    @Override
-    public BigDecimal getExcise() {
-        return EXCISE;
-    }
 }

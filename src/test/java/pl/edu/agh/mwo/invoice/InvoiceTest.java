@@ -188,6 +188,22 @@ public class InvoiceTest {
     }
 
     @Test
+    public void testAddingEqualProductsDoesNotCreateNewInvoicePosition() {
+
+        invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 2);
+        invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 3);
+
+        String printed = invoice.print();
+
+        String expected =
+                "Faktura nr " + invoice.getNumber() + "\n"
+                        + "Chleb 5 5\n"
+                        + "Liczba pozycji: 1";
+
+        Assert.assertEquals(expected, printed);
+    }
+
+    @Test
     public void testPrintingInvoiceWithTheSameProductAddedTwice() {
         Product milk = new DairyProduct(
                 "Mleko",
@@ -243,8 +259,10 @@ public class InvoiceTest {
 
     @Test
     public void testInvoiceTaxWithExciseProducts() {
-        invoice.addProduct(new BottleOfWine("Merlot", new BigDecimal("20.00"))); // VAT: 4.60
-        invoice.addProduct(new FuelCanister("Benzyna", new BigDecimal("7.00"))); // VAT: 0
+        // vat 4.60
+        invoice.addProduct(new BottleOfWine("Merlot", new BigDecimal("20.00")));
+        // vat 0
+        invoice.addProduct(new FuelCanister("Benzyna", new BigDecimal("7.00")));
 
         // suma VAT 4.60
         // Akcyza nie wchodzi do getTax()

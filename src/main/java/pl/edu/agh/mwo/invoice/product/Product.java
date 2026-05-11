@@ -22,10 +22,6 @@ public abstract class Product {
         this.taxPercent = tax;
     }
 
-    public BigDecimal getExcise() {
-        return BigDecimal.ZERO;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -40,5 +36,31 @@ public abstract class Product {
 
     public BigDecimal getPriceWithTax() {
         return this.price.add(this.price.multiply(this.taxPercent));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Product product = (Product) o;
+
+        return name.equals(product.name)
+                && price.compareTo(product.price) == 0
+                && taxPercent.compareTo(product.taxPercent) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(
+                name,
+                price,
+                taxPercent
+        );
     }
 }
